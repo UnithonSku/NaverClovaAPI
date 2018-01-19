@@ -19,14 +19,14 @@ import java.util.List;
 public class MainActivity extends Activity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-	private static final String CLIENT_ID = "YOUR CLIENT ID";
+	private static final String CLIENT_ID = "6JbEJFg08a7ZZb0E4czX";
     // 1. "내 애플리케이션"에서 Client ID를 확인해서 이곳에 적어주세요.
     // 2. build.gradle (Module:app)에서 패키지명을 실제 개발자센터 애플리케이션 설정의 '안드로이드 앱 패키지 이름'으로 바꿔 주세요
 
     private RecognitionHandler handler;
     private NaverRecognizer naverRecognizer;
 
-    private TextView txtResult;
+    private TextView txtResult,textView2;
     private Button btnStart;
     private String mResult;
 
@@ -61,11 +61,14 @@ public class MainActivity extends Activity {
             	StringBuilder strBuf = new StringBuilder();
             	for(String result : results) {
             		strBuf.append(result);
-            		strBuf.append("\n");
+            		strBuf.append(";");
             	}
                 mResult = strBuf.toString();
                 txtResult.setText(mResult);
-                break;
+
+               ReceiveSentence receiveSentence = new ReceiveSentence(strBuf);
+               textView2.setText(receiveSentence.ResendMSG());
+               break;
 
             case R.id.recognitionError:
                 if (writer != null) {
@@ -93,7 +96,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        textView2 = (TextView)findViewById(R.id.returnmsg2);
         txtResult = (TextView) findViewById(R.id.txt_result);
         btnStart = (Button) findViewById(R.id.btn_start);
 
